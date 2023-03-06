@@ -1,16 +1,28 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { NumberButton } from '../ui/buttons';
+import { UniversalButton } from '../ui/buttons';
+import { generatorArray } from '../services/helpers';
+import { TabletMain } from '../theme/globalComponentStyle';
 
-const TabletMain = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-`;
-
-const TabletNumberInbox: FC = () => (
-  <TabletMain>
-    <NumberButton onClick={(e) => console.log()} value={1} />
-  </TabletMain>
-);
+const TabletNumberInbox: FC = () => {
+  const arrayNumber = generatorArray(9); // генератор чисел аргумет количество
+  return (
+    <TabletMain>
+      {
+            arrayNumber.map((number) => (
+              <UniversalButton
+                onClick={(e) => console.log()}
+                value={number} />
+            ))
+        }
+      <UniversalButton
+        onClick={(e) => console.log()}
+        value={0}
+        width={152} />
+      <UniversalButton
+        onClick={(e) => console.log()}
+        value=',' />
+    </TabletMain>
+  );
+};
 export default TabletNumberInbox;
