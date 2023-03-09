@@ -4,6 +4,7 @@ import TabletNumberInbox from './tabletNumberInbox';
 import TabletOperatorInbox from './tabletOperatorInbox';
 import { UniversalButton } from '../ui/buttons';
 import { TabletMain } from '../theme/globalComponentStyle';
+import { fontTextMain } from '../theme/globalStyle';
 
 const CalculatorDragStyle = styled.div`
     display: flex;
@@ -25,6 +26,7 @@ box-sizing: border-box;
 align-items: center;
 border-radius: 4px;
 padding: 4px 8px;
+${fontTextMain}
 `;
 
 const CalculatorDrag: FC = () => (

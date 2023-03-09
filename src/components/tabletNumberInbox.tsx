@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import { UniversalButton } from '../ui/buttons';
 import { generatorArray } from '../services/helpers';
 import { TabletMain } from '../theme/globalComponentStyle';
