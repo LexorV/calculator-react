@@ -12,6 +12,7 @@ const CalculatorDragStyle = styled.div`
     gap: 12px;
     width: 240px;
     align-items: center;
+    margin-top: 110px;
 `;
 const ResultField = styled.div`
 margin: 4px;

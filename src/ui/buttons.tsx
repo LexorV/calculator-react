@@ -44,7 +44,8 @@ background-color: ${(props) => (props.isActive ? '#FFFFFF' : '#F3F4F6')};
   gap: 8px;
   box-sizing: border-box;
   padding: 12px;
-  width:100%
+  width:100%;
+  cursor: pointer;
 `
 
 
