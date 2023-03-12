@@ -1,18 +1,21 @@
-import React, { FC, useRef, useState } from 'react';
+import React, {
+  FC, useRef, useState,
+} from 'react';
 import styled from 'styled-components';
 import { useDrop, useDrag } from 'react-dnd';
 import { SceneryIcon } from '../ui/icons';
 import { fontTextMain } from '../theme/globalStyle';
-import { TabletMain } from '../theme/globalComponentStyle';
 import { useDispatch, useSelector } from '../services/hooks';
 import { DropNumberInbox } from '../store/calculatorDropSlice';
+import { setComponents } from '../store/constructorFieldSlice';
+import { Card } from './card';
 
 type TFieldDropStyle = {
   isHover:boolean
 };
 type TdataDrag = {
   data:FC,
-  index: number
+  id: number
 };
 const FieldDropStyle = styled.div<TFieldDropStyle>`
     width: 243px;
@@ -38,21 +41,28 @@ margin-top:4px;
 `;
 
 const FieldDrop: FC = () => {
+  const { components } = useSelector((state) => state.constructorFieldReduser);
   const dispatch = useDispatch();
   // eslint-disable-next-line
-  const [components, setcomponents] = useState<any[]>([]);
   const [components1, setcomponents1] = useState<[]>([]);
-  const { numberInbox } = useSelector((state) => state.calculatorDropSlice);
+  const {
+    numberInbox,
+    tabletOperatorInbox,
+    resultField,
+    equals,
+  } = useSelector((state) => state.calculatorDropSlice);
+
   const [{ isHover }, dropComponent] = useDrop({
     accept: 'DropField',
     drop(data:FC) {
       // eslint-disable-next-line
       console.log(data);
+      const newArrr = [...components];
       // eslint-disable-next-line
-       components.push({data: data, index:
-       components.length > 0
-         ? components.length - 1 : 0,
-      });
+      const newId =  components.length >= 0
+        ? newArrr.length : 0;
+      newArrr.push({ data, id: newId });
+      dispatch(setComponents(newArrr));
       // setcomponents(components.push(data))
 
       // setcomponents(data);
@@ -61,36 +71,26 @@ const FieldDrop: FC = () => {
       isHover: monitor.isOver(),
     }),
   });
-  /*
-  const [{ isDrag }, dragRef] = useDrag({
-    type: 'ingredientInConstructior',
-    item:
-    collect: (monitor) => ({
-      isDrag: monitor.isDragging(),
-    }),
-  }); */
-  /*
-  const [{}, dropIngred] = useDrop({
-    accept: 'ingredientInConstructior',
-    drop(data: any) {
-
-    },
-    collect: (monitor) => ({
-      isHover: monitor.isOver(),
-    }),
-  }); */
-
   return (
     <FieldDropStyle isHover={isHover} ref={dropComponent}>
-      <SceneryIcon />
-      <HeadingDropText>Перетащите сюда</HeadingDropText>
-      <DropText> любой элемент из левой панели </DropText>
-      <>
-        <div> </div>
-        {components.length > 0 && (components.map((component:FC) => (
-          component.data
+      { !numberInbox
+    && !tabletOperatorInbox
+    && !resultField
+    && !equals
+     && (
+     <>
+       <SceneryIcon />
+       <HeadingDropText>Перетащите сюда</HeadingDropText>
+       <DropText> любой элемент из левой панели </DropText>
+     </>
+     )}
+      <div>
+        {components.length > 0 && (components.map((component:TdataDrag, i) => (
+          <Card id={component.id} index={i}>
+            {component.data}
+          </Card>
         )))}
-      </>
+      </div>
     </FieldDropStyle>
   );
 };

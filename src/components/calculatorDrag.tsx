@@ -1,13 +1,11 @@
 import React, { FC, useRef } from 'react';
 import styled from 'styled-components';
 import { useDrag } from 'react-dnd';
-import { ThunkAction } from '@reduxjs/toolkit';
 import TabletNumberInbox from './tabletNumberInbox';
 import TabletOperatorInbox from './tabletOperatorInbox';
-import { UniversalButton } from '../ui/buttons';
-import { TabletMain } from '../theme/globalComponentStyle';
-import { fontTextMain } from '../theme/globalStyle';
 import { useDispatch, useSelector } from '../services/hooks';
+import ResultField from './ResultField';
+import Equals from './equals';
 import {
   DropNumberInbox,
   DropTabletOperatorInbox,
@@ -22,21 +20,6 @@ const CalculatorDragStyle = styled.div`
     width: 240px;
     align-items: center;
     margin-top: 110px;
-`;
-const ResultField = styled.div`
-margin: 4px;
-width: 232px;
-height: 52px;
-display: flex;
-background-color:#F3F4F6;
-justify-content: flex-end;
-font-weight: 800;
-font-size: 36px;
-box-sizing: border-box;
-align-items: center;
-border-radius: 4px;
-padding: 4px 8px;
-${fontTextMain}
 `;
 
 const CalculatorDrag: FC = () => {
@@ -72,36 +55,29 @@ const CalculatorDrag: FC = () => {
     DropNumberInbox,
   );
   const resultFieldRef = ComponentDrag(
-    TabletOperatorInbox,
+    ResultField,
     resultField,
     DropResultField,
   );
-  const test = () => {
-    dispatch(DropNumberInbox());
-    console.log(numberInbox);
-  };
-
+  const EqualsRef = ComponentDrag(
+    Equals,
+    equals,
+    DropEquals,
+  );
   return (
     <CalculatorDragStyle>
-      <TabletMain>
-        <ResultField>
-          1
-        </ResultField>
-      </TabletMain>
+      <div ref={resultFieldRef}>
+        <ResultField />
+      </div>
       <div ref={TabletOperatorInboxRef}>
         <TabletOperatorInbox />
       </div>
       <div ref={TabletNumberInboxRef}>
         <TabletNumberInbox test='test' />
       </div>
-      <TabletMain>
-        <UniversalButton
-          isEquals
-          height={64}
-          width={232}
-          value='='
-          onClick={test} />
-      </TabletMain>
+      <div ref={EqualsRef}>
+        <Equals />
+      </div>
     </CalculatorDragStyle>
   );
 };
