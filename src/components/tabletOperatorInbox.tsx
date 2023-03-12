@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { TabletMain } from '../theme/globalComponentStyle';
 import { UniversalButton } from '../ui/buttons';
 

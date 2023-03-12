@@ -16,4 +16,3 @@ export const fontTextMain = css`
   line-height: 14px;
   font-weight: 500;
 `;
-export default GlobalStyle;
