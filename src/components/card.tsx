@@ -1,71 +1,84 @@
-import type { Identifier, XYCoord } from 'dnd-core';
-import type { FC } from 'react';
-import { useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import styled from 'styled-components';
 import { useDispatch, useSelector } from '../services/hooks';
 import { setComponents } from '../store/constructorFieldSlice';
+import { DragItem, TDndBoxStyle } from '../types/dragField';
 
-interface DragItem {
-  data: FC
-  id: number
-}
 export interface CardProps {
   id: number
   index: number,
   children: any
 }
+const Line = styled.div`
+width: 240px;
+height: 2px;
+background-color: #5D5FEF;
+`;
+const Square = styled.div`
+width: 4px;
+height: 4px;
+background-color: #5D5FEF;
+transform: rotate(45deg);
+`;
+const BoxLine = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const DndBoxStyle = styled.div<TDndBoxStyle>`
+opacity: ${(props) => (props.isDrag ? 0.5 : 1)};;
+transition: padding .2s ease-in-out;
+cursor: move;
+`;
 
 export const Card: FC<CardProps> = ({ id, index, children }) => {
   const { components } = useSelector((state) => state.constructorFieldReduser);
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
-  const [{ handlerId }, drop] = useDrop<
+  const [{ isHover }, drop] = useDrop<
   DragItem,
   void,
-  { handlerId: Identifier | null }
+  { isHover:boolean }
   >({
     accept: 'card',
     collect: (monitor) => ({
       handlerId: monitor.getHandlerId(),
+      isHover: monitor.isOver(),
     }),
-    hover(item: DragItem, monitor) {
-      if (!ref.current) {
-        return;
-      }
-      const dragIndex = item.id;
+    drop(item: DragItem) {
+      const dragIndex = components.findIndex((el) => el.id === item.id);
       const hoverIndex = index;
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
       const newArr = [...components];
       newArr.splice(hoverIndex, 0, newArr.splice(dragIndex, 1)[0]);
       dispatch(setComponents(newArr));
     },
   });
+  // eslint-disable-next-line
   const [{ isDragging }, drag] = useDrag({
     type: 'card',
-    item: () => ({ id, index }),
-    collect: (monitor: any) => ({
+    item: { id, index },
+    collect: (monitor) => ({
+      // eslint-disable-next-line
       isDragging: monitor.isDragging(),
     }),
   });
 
   drag(drop(ref));
+  /* eslint-disable */
   return (
-    <div ref={ref}>
+    <DndBoxStyle isDrag={isDragging} ref={ref}>
+      { isHover && (
+      <BoxLine>
+        <Square />
+      <Line />
+      <Square />
+      </BoxLine>
+      )}
       {children}
-    </div>
+    </DndBoxStyle>
   );
 };
+/* eslint-disable */
 export default Card;

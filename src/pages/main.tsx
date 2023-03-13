@@ -15,7 +15,7 @@ const DropSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
-  margin-top: 30px;
+  margin-top: 35px;
 `;
 
 const Main: FC = () => (
