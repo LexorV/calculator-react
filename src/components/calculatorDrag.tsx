@@ -36,7 +36,7 @@ const CalculatorDrag: FC = () => {
     dis: any, // Action переноса компонента
   ) => {
     const [, dragRef] = useDrag({
-      type: 'DropField',
+      type: 'dndField',
       item: tab,
       canDrag: !isComponent,
       // eslint-disable-next-line

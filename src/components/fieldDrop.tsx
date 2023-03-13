@@ -1,27 +1,24 @@
 import React, {
-  FC, useRef, useState,
+  FC,
 } from 'react';
 import styled from 'styled-components';
-import { useDrop, useDrag } from 'react-dnd';
+import { useDrop } from 'react-dnd';
 import { SceneryIcon } from '../ui/icons';
 import { fontTextMain } from '../theme/globalStyle';
 import { useDispatch, useSelector } from '../services/hooks';
-import { DropNumberInbox } from '../store/calculatorDropSlice';
 import { setComponents } from '../store/constructorFieldSlice';
 import { Card } from './card';
+import { DragItem } from '../types/dragField';
 
 type TFieldDropStyle = {
   isHover:boolean
-};
-type TdataDrag = {
-  data:FC,
-  id: number
+  isDropComponent:boolean
 };
 const FieldDropStyle = styled.div<TFieldDropStyle>`
     width: 243px;
     height: 448px;
     border-radius: 6px;
-    border: 2px dashed #C4C4C4;
+    border: ${(props) => (props.isDropComponent ? '2px dashed #C4C4C4' : 'none')};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,44 +36,45 @@ ${fontTextMain}
 font-size: 12px;
 margin-top:4px;
 `;
+const ConstructorBox = styled.div`
+  display:flex;
+  flex-direction: column;
+  gap:5px;
+`;
 
 const FieldDrop: FC = () => {
   const { components } = useSelector((state) => state.constructorFieldReduser);
   const dispatch = useDispatch();
-  // eslint-disable-next-line
-  const [components1, setcomponents1] = useState<[]>([]);
   const {
     numberInbox,
     tabletOperatorInbox,
     resultField,
     equals,
   } = useSelector((state) => state.calculatorDropSlice);
-
   const [{ isHover }, dropComponent] = useDrop({
-    accept: 'DropField',
+    accept: 'dndField',
     drop(data:FC) {
-      // eslint-disable-next-line
-      console.log(data);
-      const newArrr = [...components];
-      // eslint-disable-next-line
-      const newId =  components.length >= 0
-        ? newArrr.length : 0;
-      newArrr.push({ data, id: newId });
-      dispatch(setComponents(newArrr));
-      // setcomponents(components.push(data))
-
-      // setcomponents(data);
+      const newArr = [...components];
+      const newId = components.length >= 0
+        ? newArr.length : 0;
+      newArr.push({ data, id: newId });
+      dispatch(setComponents(newArr));
     },
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
   });
+  const isDropComponent = () => {
+    if (!numberInbox
+      && !tabletOperatorInbox
+      && !resultField
+      && !equals) { return true; }
+    return false;
+  };
+    // eslint-disable-next-line
   return (
-    <FieldDropStyle isHover={isHover} ref={dropComponent}>
-      { !numberInbox
-    && !tabletOperatorInbox
-    && !resultField
-    && !equals
+    <FieldDropStyle isDropComponent={isDropComponent()} isHover={isHover} ref={dropComponent}>
+      { isDropComponent()
      && (
      <>
        <SceneryIcon />
@@ -84,13 +82,13 @@ const FieldDrop: FC = () => {
        <DropText> любой элемент из левой панели </DropText>
      </>
      )}
-      <div>
-        {components.length > 0 && (components.map((component:TdataDrag, i) => (
-          <Card id={component.id} index={i}>
+      <ConstructorBox>
+        {components.length > 0 && (components.map((component:DragItem, i) => (
+          <Card key={component.id} id={component.id} index={i}>
             {component.data}
           </Card>
         )))}
-      </div>
+      </ConstructorBox>
     </FieldDropStyle>
   );
 };
