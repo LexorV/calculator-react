@@ -12,6 +12,7 @@ import {
   DropResultField,
   DropEquals,
 } from '../store/calculatorDropSlice';
+import { TDndBoxStyle } from '../types/dragField';
 
 const CalculatorDragStyle = styled.div`
     display: flex;
@@ -20,6 +21,20 @@ const CalculatorDragStyle = styled.div`
     width: 240px;
     align-items: center;
     margin-top: 110px;
+`;
+/* eslint-disable */
+const ComponentBox = styled.div<TDndBoxStyle>`
+ opacity: ${(props) => (props.isDrag ? 0.5 : 1)};
+ position: relative;
+cursor: ${(props) => (props.isDrag ? 'not-allowed' : 'move')};
+`;
+/* eslint-disable */
+const WrapComponent = styled.div`
+  opacity:0;
+  position: absolute;
+  z-index: 40;
+  width:100%;
+  height: 100%;
 `;
 
 const CalculatorDrag: FC = () => {
@@ -66,18 +81,22 @@ const CalculatorDrag: FC = () => {
   );
   return (
     <CalculatorDragStyle>
-      <div ref={resultFieldRef}>
+      <ComponentBox isDrag={resultField} ref={resultFieldRef}>
+        <WrapComponent />
         <ResultField />
-      </div>
-      <div ref={TabletOperatorInboxRef}>
+      </ComponentBox>
+      <ComponentBox isDrag={tabletOperatorInbox} ref={TabletOperatorInboxRef}>
+        <WrapComponent />
         <TabletOperatorInbox />
-      </div>
-      <div ref={TabletNumberInboxRef}>
+      </ComponentBox>
+      <ComponentBox isDrag={numberInbox} ref={TabletNumberInboxRef}>
+        <WrapComponent />
         <TabletNumberInbox test='test' />
-      </div>
-      <div ref={EqualsRef}>
+      </ComponentBox>
+      <ComponentBox isDrag={equals} ref={EqualsRef}>
+        <WrapComponent />
         <Equals />
-      </div>
+      </ComponentBox>
     </CalculatorDragStyle>
   );
 };

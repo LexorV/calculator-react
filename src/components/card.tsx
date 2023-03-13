@@ -3,16 +3,13 @@ import { useDrag, useDrop } from 'react-dnd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from '../services/hooks';
 import { setComponents } from '../store/constructorFieldSlice';
-import { DragItem } from '../types/dragField';
+import { DragItem, TDndBoxStyle } from '../types/dragField';
 
 export interface CardProps {
   id: number
   index: number,
   children: any
 }
-type TDndBoxStyle = {
-  isDrag: boolean
-};
 const Line = styled.div`
 width: 240px;
 height: 2px;

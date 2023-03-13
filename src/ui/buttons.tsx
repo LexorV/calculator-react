@@ -1,7 +1,6 @@
-/* eslint-disable */
 import styled from 'styled-components';
 import React, { MouseEventHandler, FC } from 'react';
-import {EyeIcon, SelectorIcon} from './icons'
+import { EyeIcon, SelectorIcon } from './icons';
 
 type TBasicButtonProps = {
   disabled?: boolean;
@@ -9,17 +8,17 @@ type TBasicButtonProps = {
   height?: number;
   isEquals?: boolean;
 };
-interface  IButtonProps  extends TBasicButtonProps {
+interface IButtonProps extends TBasicButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
   value?: string | number;
-};
-
+}
+/* eslint-disable */
 type TmodeSwithButton = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   isActive: boolean;
   type?: 'Constructor' | 'Runtime'
-}
-type TmodeSwithButtonStyle =  Omit<TmodeSwithButton, 'onClick' | 'type' >
+};
+type TmodeSwithButtonStyle = Omit<TmodeSwithButton, 'onClick' | 'type' >;
 
 const BasicNormalButton = styled.button<TBasicButtonProps>`
 width: ${(props) => props.width || 72}px;
@@ -31,9 +30,9 @@ cursor: pointer;
 display: flex;
 justify-content: center;
 align-items: center;
-// eslint-disable-next-line
 background-color: ${(props) => (props.isEquals ? '#5D5FEF' : '#FFFFFF')};
 `;
+/* eslint-disable */
 const ButtonSwithStyle = styled.button<TmodeSwithButtonStyle>`
 height: 36px;
 background-color: ${(props) => (props.isActive ? '#FFFFFF' : '#F3F4F6')};
@@ -82,7 +81,6 @@ ModeSwithButton.defaultProps = {
   type: 'Constructor',
   isActive: false,
 };
-
 
 UniversalButton.defaultProps = {
   value: '',
