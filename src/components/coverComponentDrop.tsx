@@ -27,7 +27,7 @@ const BoxLine = styled.div`
   align-items: center;
 `;
 export const CoverComponentDrop: FC<IcoverComponentDrop> = ({ id, index, children }) => {
-  const { components, isConstructor } = useSelector((state) => state.constructorFieldReduser);
+  const { components, isConstructor } = useSelector((state) => state.constructorField);
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
 

@@ -41,9 +41,9 @@ const CalculatorDrag: FC = () => {
     tabletOperatorInbox,
     resultField,
     equals,
-  } = useSelector((state) => state.calculatorDropSlice);
+  } = useSelector((state) => state.dropComponentsPostion);
   const dispatch = useDispatch();
-  const { isConstructor } = useSelector((state) => state.constructorFieldReduser);
+  const { isConstructor } = useSelector((state) => state.constructorField);
   const ComponentDrag = (
     tab: FC, // Сам React компонент
     isComponent:boolean, // Проверка перенёсся компонент

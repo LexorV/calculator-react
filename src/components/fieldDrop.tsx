@@ -43,14 +43,14 @@ const ConstructorBox = styled.div`
 `;
 
 const FieldDrop: FC = () => {
-  const { components } = useSelector((state) => state.constructorFieldReduser);
+  const { components } = useSelector((state) => state.constructorField);
   const dispatch = useDispatch();
   const {
     numberInbox,
     tabletOperatorInbox,
     resultField,
     equals,
-  } = useSelector((state) => state.calculatorDropSlice);
+  } = useSelector((state) => state.dropComponentsPostion);
   const [{ isHover }, dropComponent] = useDrop({
     accept: 'dndField',
     drop(data:FC) {
@@ -71,7 +71,6 @@ const FieldDrop: FC = () => {
       && !equals) { return true; }
     return false;
   };
-    // eslint-disable-next-line
   return (
     <FieldDropStyle isDropComponent={isDropComponent()} isHover={isHover} ref={dropComponent}>
       { isDropComponent()
