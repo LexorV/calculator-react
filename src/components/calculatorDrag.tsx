@@ -13,6 +13,7 @@ import {
   DropEquals,
 } from '../store/calculatorDropSlice';
 import { ComponentBox } from '../theme/globalComponentStyle';
+import { NameComponents } from '../constans/constans';
 
 const CalculatorDragStyle = styled.div`
     display: flex;
@@ -45,13 +46,13 @@ const CalculatorDrag: FC = () => {
   const dispatch = useDispatch();
   const { isConstructor } = useSelector((state) => state.constructorField);
   const ComponentDrag = (
-    tab: FC, // Сам React компонент
+    name: NameComponents, // Сам React компонент
     isComponent:boolean, // Проверка перенёсся компонент
     dis: any, // Action переноса компонента
   ) => {
     const [, dragRef] = useDrag({
       type: 'dndField',
-      item: tab,
+      item: {name},
       canDrag: !isComponent,
       // eslint-disable-next-line
       end: () => dispatch(dis()),
@@ -59,22 +60,22 @@ const CalculatorDrag: FC = () => {
     return dragRef;
   };
   const TabletOperatorInboxRef = ComponentDrag(
-    TabletOperatorInbox,
+    NameComponents.operators,
     tabletOperatorInbox,
     DropTabletOperatorInbox,
   );
   const TabletNumberInboxRef = ComponentDrag(
-    TabletNumberInbox,
+    NameComponents.numbers,
     numberInbox,
     DropNumberInbox,
   );
   const resultFieldRef = ComponentDrag(
-    ResultField,
+    NameComponents.result,
     resultField,
     DropResultField,
   );
   const EqualsRef = ComponentDrag(
-    Equals,
+    NameComponents.equals,
     equals,
     DropEquals,
   );
@@ -91,7 +92,7 @@ const CalculatorDrag: FC = () => {
       </ComponentBoxDrag>
       <ComponentBoxDrag isDrag={numberInbox} ref={TabletNumberInboxRef}>
         <WrapComponent />
-        <TabletNumberInbox test='test' />
+        <TabletNumberInbox />
       </ComponentBoxDrag>
       <ComponentBoxDrag isDrag={equals} ref={EqualsRef}>
         <WrapComponent />

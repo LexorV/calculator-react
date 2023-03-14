@@ -19,11 +19,14 @@ align-items: center;
 border-radius: 4px;
 padding: 4px 8px;
 `;
-const ResultField: FC = () => (
-  <TabletMain>
-    <ResultFieldStyle>
-      0
-    </ResultFieldStyle>
-  </TabletMain>
-);
+const ResultField: FC = () => {
+  const { result } = useSelector((state) => state.calculator);
+  return (
+    <TabletMain>
+      <ResultFieldStyle>
+        {result}
+      </ResultFieldStyle>
+    </TabletMain>
+  );
+};
 export default ResultField;

@@ -3,11 +3,7 @@ import { UniversalButton } from '../ui/buttons';
 import { generatorArray } from '../services/helpers';
 import { TabletMain } from '../theme/globalComponentStyle';
 
-type Ttest = {
-  test?:string
-};
-
-const TabletNumberInbox: FC<Ttest> = ({ test }) => {
+const TabletNumberInbox: FC = () => {
   const arrayNumber = generatorArray(9); // генератор чисел аргумет количество
   return (
     <TabletMain>
@@ -27,8 +23,5 @@ const TabletNumberInbox: FC<Ttest> = ({ test }) => {
         value=',' />
     </TabletMain>
   );
-};
-TabletNumberInbox.defaultProps = {
-  test: 'test',
 };
 export default TabletNumberInbox;

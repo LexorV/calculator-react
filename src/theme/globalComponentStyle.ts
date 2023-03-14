@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TDndBoxStyle } from '../types/dragField';
+import { TDndBoxStyle } from '../types/globalType';
 
 export const TabletMain = styled.div`
     display: flex;

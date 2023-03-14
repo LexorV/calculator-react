@@ -3,7 +3,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from '../services/hooks';
 import { setComponents } from '../store/constructorFieldSlice';
-import { DragItem } from '../types/dragField';
+import { DragItem } from '../types/globalType';
 import { ComponentBox, WrapComponent } from '../theme/globalComponentStyle';
 
 interface IcoverComponentDrop {
