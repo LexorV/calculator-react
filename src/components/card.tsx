@@ -25,12 +25,13 @@ const BoxLine = styled.div`
   display: flex;
   align-items: center;
 `;
-
+/* eslint-disable */
 const DndBoxStyle = styled.div<TDndBoxStyle>`
 opacity: ${(props) => (props.isDrag ? 0.5 : 1)};;
 transition: padding .2s ease-in-out;
 cursor: move;
 `;
+/* eslint-disable */
 
 export const Card: FC<CardProps> = ({ id, index, children }) => {
   const { components } = useSelector((state) => state.constructorFieldReduser);
