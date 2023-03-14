@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '../services/hooks';
 import { setComponents } from '../store/constructorFieldSlice';
 import { DragItem, TDndBoxStyle } from '../types/dragField';
 
-export interface CardProps {
+interface IcoverComponentDrop {
   id: number
   index: number,
   children: any
@@ -33,7 +33,7 @@ cursor: move;
 `;
 /* eslint-disable */
 
-export const CoverComponentDrop: FC<CardProps> = ({ id, index, children }) => {
+export const CoverComponentDrop: FC<IcoverComponentDrop> = ({ id, index, children }) => {
   const { components } = useSelector((state) => state.constructorFieldReduser);
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
