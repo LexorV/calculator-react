@@ -54,7 +54,6 @@ const CalculatorDrag: FC = () => {
       type: 'dndField',
       item: {name},
       canDrag: !isComponent,
-      // eslint-disable-next-line
       end: () => dispatch(dis()),
     });
     return dragRef;

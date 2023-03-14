@@ -13,12 +13,6 @@ import ResultField from './ResultField';
 import TabletNumberInbox from './tabletNumberInbox';
 import TabletOperatorInbox from './tabletOperatorInbox';
 import Equals from './equals';
-import {
-  DropNumberInbox,
-  DropTabletOperatorInbox,
-  DropResultField,
-  DropEquals,
-} from '../store/calculatorDropSlice';
 import { NameComponents } from '../constans/constans';
 
 type TFieldDropStyle = {
@@ -99,7 +93,10 @@ const FieldDrop: FC = () => {
     return false;
   };
   return (
-    <FieldDropStyle isDropComponent={isDropComponent()} isHover={isHover} ref={dropComponent}>
+    <FieldDropStyle
+      isDropComponent={isDropComponent()}
+      isHover={isHover}
+      ref={dropComponent}>
       { isDropComponent()
      && (
      <>

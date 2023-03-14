@@ -10,6 +10,7 @@ const TabletNumberInbox: FC = () => {
       {
             arrayNumber.map((number) => (
               <UniversalButton
+                key={number}
                 onClick={(e) => console.log()}
                 value={number} />
             ))

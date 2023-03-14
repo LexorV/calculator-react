@@ -7,10 +7,11 @@ const TabletOperatorInbox: FC = () => {
   return (
     <TabletMain>
       {
-            newArray.map((number) => (
+            newArray.map((operator) => (
               <UniversalButton
                 onClick={(e) => console.log()}
-                value={number}
+                value={operator}
+                key={operator}
                 width={52} />
             ))
         }
