@@ -7,7 +7,7 @@ import { SceneryIcon } from '../ui/icons';
 import { fontTextMain } from '../theme/globalStyle';
 import { useDispatch, useSelector } from '../services/hooks';
 import { setComponents } from '../store/constructorFieldSlice';
-import { Card } from './card';
+import { CoverComponentDrop } from './coverComponentDrop';
 import { DragItem } from '../types/dragField';
 
 type TFieldDropStyle = {
@@ -84,9 +84,9 @@ const FieldDrop: FC = () => {
      )}
       <ConstructorBox>
         {components.length > 0 && (components.map((component:DragItem, i) => (
-          <Card key={component.id} id={component.id} index={i}>
+          <CoverComponentDrop key={component.id} id={component.id} index={i}>
             {component.data}
-          </Card>
+          </CoverComponentDrop>
         )))}
       </ConstructorBox>
     </FieldDropStyle>

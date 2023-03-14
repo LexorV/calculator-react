@@ -33,7 +33,7 @@ cursor: move;
 `;
 /* eslint-disable */
 
-export const Card: FC<CardProps> = ({ id, index, children }) => {
+export const CoverComponentDrop: FC<CardProps> = ({ id, index, children }) => {
   const { components } = useSelector((state) => state.constructorFieldReduser);
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
@@ -43,7 +43,7 @@ export const Card: FC<CardProps> = ({ id, index, children }) => {
   void,
   { isHover:boolean }
   >({
-    accept: 'card',
+    accept: 'constructorComponent',
     collect: (monitor) => ({
       handlerId: monitor.getHandlerId(),
       isHover: monitor.isOver(),
@@ -58,7 +58,7 @@ export const Card: FC<CardProps> = ({ id, index, children }) => {
   });
   // eslint-disable-next-line
   const [{ isDragging }, drag] = useDrag({
-    type: 'card',
+    type: 'constructorComponent',
     item: { id, index },
     collect: (monitor) => ({
       // eslint-disable-next-line
@@ -82,4 +82,4 @@ export const Card: FC<CardProps> = ({ id, index, children }) => {
   );
 };
 /* eslint-disable */
-export default Card;
+export default CoverComponentDrop;
