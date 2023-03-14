@@ -5,6 +5,7 @@
 * Клонируйте репозиторий в созданную директорию git clone https://github.com/LexorV/calculator-react.git
 * Запуск в режиме разработки выполните npm start. Проект доступен ао адресу http://localhost:3000
 ### На данный момент рабочая версия DND
+#### Demo: https://lexorv.github.io/calculator-react/
 #### Требуется сделать:
 * Логика самого калькулятора
 * Логика кнопок коструктора
