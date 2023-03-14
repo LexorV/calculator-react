@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useDrag } from 'react-dnd';
 import TabletNumberInbox from './tabletNumberInbox';
@@ -12,7 +12,7 @@ import {
   DropResultField,
   DropEquals,
 } from '../store/calculatorDropSlice';
-import { TDndBoxStyle } from '../types/dragField';
+import { ComponentBox } from '../theme/globalComponentStyle';
 
 const CalculatorDragStyle = styled.div`
     display: flex;
@@ -23,9 +23,7 @@ const CalculatorDragStyle = styled.div`
     margin-top: 110px;
 `;
 /* eslint-disable */
-const ComponentBox = styled.div<TDndBoxStyle>`
- opacity: ${(props) => (props.isDrag ? 0.5 : 1)};
- position: relative;
+const ComponentBoxDrag = styled(ComponentBox)`
 cursor: ${(props) => (props.isDrag ? 'not-allowed' : 'move')};
 `;
 /* eslint-disable */
@@ -45,6 +43,7 @@ const CalculatorDrag: FC = () => {
     equals,
   } = useSelector((state) => state.calculatorDropSlice);
   const dispatch = useDispatch();
+  const { isConstructor } = useSelector((state) => state.constructorFieldReduser);
   const ComponentDrag = (
     tab: FC, // Сам React компонент
     isComponent:boolean, // Проверка перенёсся компонент
@@ -79,25 +78,28 @@ const CalculatorDrag: FC = () => {
     equals,
     DropEquals,
   );
-  return (
-    <CalculatorDragStyle>
-      <ComponentBox isDrag={resultField} ref={resultFieldRef}>
+  return (<div>
+    {isConstructor && 
+    (<CalculatorDragStyle>
+      <ComponentBoxDrag isDrag={resultField} ref={resultFieldRef}>
         <WrapComponent />
         <ResultField />
-      </ComponentBox>
-      <ComponentBox isDrag={tabletOperatorInbox} ref={TabletOperatorInboxRef}>
+      </ComponentBoxDrag>
+      <ComponentBoxDrag isDrag={tabletOperatorInbox} ref={TabletOperatorInboxRef}>
         <WrapComponent />
         <TabletOperatorInbox />
-      </ComponentBox>
-      <ComponentBox isDrag={numberInbox} ref={TabletNumberInboxRef}>
+      </ComponentBoxDrag>
+      <ComponentBoxDrag isDrag={numberInbox} ref={TabletNumberInboxRef}>
         <WrapComponent />
         <TabletNumberInbox test='test' />
-      </ComponentBox>
-      <ComponentBox isDrag={equals} ref={EqualsRef}>
+      </ComponentBoxDrag>
+      <ComponentBoxDrag isDrag={equals} ref={EqualsRef}>
         <WrapComponent />
         <Equals />
-      </ComponentBox>
-    </CalculatorDragStyle>
+      </ComponentBoxDrag>
+    </CalculatorDragStyle>)
+}
+    </div>
   );
 };
 export default CalculatorDrag;

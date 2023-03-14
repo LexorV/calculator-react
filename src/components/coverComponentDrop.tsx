@@ -3,9 +3,10 @@ import { useDrag, useDrop } from 'react-dnd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from '../services/hooks';
 import { setComponents } from '../store/constructorFieldSlice';
-import { DragItem, TDndBoxStyle } from '../types/dragField';
+import { DragItem } from '../types/dragField';
+import { ComponentBox, WrapComponent } from '../theme/globalComponentStyle';
 
-export interface CardProps {
+interface IcoverComponentDrop {
   id: number
   index: number,
   children: any
@@ -25,16 +26,8 @@ const BoxLine = styled.div`
   display: flex;
   align-items: center;
 `;
-/* eslint-disable */
-const DndBoxStyle = styled.div<TDndBoxStyle>`
-opacity: ${(props) => (props.isDrag ? 0.5 : 1)};;
-transition: padding .2s ease-in-out;
-cursor: move;
-`;
-/* eslint-disable */
-
-export const Card: FC<CardProps> = ({ id, index, children }) => {
-  const { components } = useSelector((state) => state.constructorFieldReduser);
+export const CoverComponentDrop: FC<IcoverComponentDrop> = ({ id, index, children }) => {
+  const { components, isConstructor } = useSelector((state) => state.constructorFieldReduser);
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -43,7 +36,7 @@ export const Card: FC<CardProps> = ({ id, index, children }) => {
   void,
   { isHover:boolean }
   >({
-    accept: 'card',
+    accept: 'constructorComponent',
     collect: (monitor) => ({
       handlerId: monitor.getHandlerId(),
       isHover: monitor.isOver(),
@@ -58,8 +51,9 @@ export const Card: FC<CardProps> = ({ id, index, children }) => {
   });
   // eslint-disable-next-line
   const [{ isDragging }, drag] = useDrag({
-    type: 'card',
+    type: 'constructorComponent',
     item: { id, index },
+    canDrag: isConstructor,
     collect: (monitor) => ({
       // eslint-disable-next-line
       isDragging: monitor.isDragging(),
@@ -69,7 +63,8 @@ export const Card: FC<CardProps> = ({ id, index, children }) => {
   drag(drop(ref));
   /* eslint-disable */
   return (
-    <DndBoxStyle isDrag={isDragging} ref={ref}>
+    <ComponentBox isDrag={isDragging} ref={ref}>
+    {isConstructor && (<WrapComponent  />)}
       { isHover && (
       <BoxLine>
         <Square />
@@ -78,8 +73,8 @@ export const Card: FC<CardProps> = ({ id, index, children }) => {
       </BoxLine>
       )}
       {children}
-    </DndBoxStyle>
+    </ComponentBox>
   );
 };
 /* eslint-disable */
-export default Card;
+export default CoverComponentDrop;

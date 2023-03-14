@@ -8,10 +8,12 @@ type TcomponentCalac = {
 
 type TconstructorField = {
   components:TcomponentCalac[],
+  isConstructor:boolean
 };
 
 const initialState: TconstructorField = {
   components: [],
+  isConstructor: true,
 };
 const constructorFieldSlice = createSlice({
   name: 'constructorField',
@@ -20,8 +22,18 @@ const constructorFieldSlice = createSlice({
     setComponents: (state: TconstructorField, action: PayloadAction<TcomponentCalac[]>) => ({
       ...state, components: action.payload,
     }),
+    constructorEnable: (state: TconstructorField) => ({
+      ...state, isConstructor: true,
+    }),
+    constructorDisable: (state: TconstructorField) => ({
+      ...state, isConstructor: false,
+    }),
   },
 });
 const constructorFieldReduser = constructorFieldSlice.reducer;
-export const { setComponents } = constructorFieldSlice.actions;
+export const {
+  setComponents,
+  constructorEnable,
+  constructorDisable,
+} = constructorFieldSlice.actions;
 export default constructorFieldReduser;
