@@ -2,6 +2,8 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { ModeSwithButton } from '../ui/buttons';
 import { fontTextMain } from '../theme/globalStyle';
+import { useDispatch, useSelector } from '../services/hooks';
+import { constructorEnable, constructorDisable } from '../store/constructorFieldSlice';
 
 const ModeSwitchingPanelStyle = styled.div`
     width:243px;
@@ -13,11 +15,21 @@ const ModeSwitchingPanelStyle = styled.div`
     ${fontTextMain}
 `;
 
-const ModeSwitchingPanel: FC = () => (
-  <ModeSwitchingPanelStyle>
-    <ModeSwithButton isActive={false} type='Runtime' onClick={(e) => console.log(e)} />
-    <ModeSwithButton isActive type='Constructor' onClick={(e) => console.log(e)} />
+const ModeSwitchingPanel: FC = () => {
+  const { isConstructor } = useSelector((state) => state.constructorFieldReduser);
+  const dispatch = useDispatch();
+  return (
+    <ModeSwitchingPanelStyle>
+      <ModeSwithButton
+        isActive={!isConstructor}
+        type='Runtime'
+        onClick={(e) => dispatch(constructorDisable())} />
+      <ModeSwithButton
+        isActive={isConstructor}
+        type='Constructor'
+        onClick={(e) => dispatch(constructorEnable())} />
 
-  </ModeSwitchingPanelStyle>
-);
+    </ModeSwitchingPanelStyle>
+  );
+};
 export default ModeSwitchingPanel;
