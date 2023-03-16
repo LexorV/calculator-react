@@ -1,10 +1,17 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useRef, MouseEvent } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from '../services/hooks';
 import { setComponents } from '../store/constructorFieldSlice';
 import { DragItem } from '../types/globalType';
 import { ComponentBox, WrapComponent } from '../theme/globalComponentStyle';
+import { NameComponents } from '../constans/constans';
+import {
+  ClearNumberInbox,
+  ClearTabletOperatorInbox,
+  ClearResultField,
+  ClearEquals,
+} from '../store/calculatorDropSlice';
 
 interface IcoverComponentDrop {
   id: number
@@ -59,11 +66,36 @@ export const CoverComponentDrop: FC<IcoverComponentDrop> = ({ id, index, childre
       isDragging: monitor.isDragging(),
     }),
   });
-
   drag(drop(ref));
+  const handleClick = (event:MouseEvent<HTMLDivElement>) => {
+    if (event.detail === 2 && isConstructor) {
+      const indexEl = components.findIndex((el) => el.id === id);
+      const newArr = [...components];
+      newArr.splice(indexEl, 1);
+      // eslint-disable-next-line
+      switch (components[indexEl].data.type.name) {
+        case NameComponents.result:
+          dispatch(ClearResultField());
+          break;
+        case NameComponents.numbers:
+          dispatch(ClearNumberInbox());
+          break;
+        case NameComponents.operators:
+          dispatch(ClearTabletOperatorInbox());
+          break;
+        case NameComponents.equals:
+          dispatch(ClearEquals());
+          break;
+        default:
+          dispatch(setComponents([]));
+          break;
+      }
+      dispatch(setComponents(newArr));
+    }
+  };
   /* eslint-disable */
   return (
-    <ComponentBox isDrag={isDragging} ref={ref}>
+    <ComponentBox onClick={handleClick} isDrag={isDragging} ref={ref}>
     {isConstructor && (<WrapComponent  />)}
       { isHover && (
       <BoxLine>

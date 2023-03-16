@@ -8,7 +8,7 @@ import {
 } from '../store/calculatorState';
 import { checkLastPoint } from '../services/helpers';
 
-const TabletOperatorInbox: FC = () => {
+const TabletOperators: FC = () => {
   const {
     numberOne, result,
   } = useSelector((state) => state.calculator);
@@ -47,4 +47,4 @@ const TabletOperatorInbox: FC = () => {
     </TabletMain>
   );
 };
-export default TabletOperatorInbox;
+export default TabletOperators;

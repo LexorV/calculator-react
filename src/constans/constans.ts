@@ -1,8 +1,8 @@
 export enum NameComponents {
-  result = 'result',
-  numbers = 'numbers',
-  operators = 'operators',
-  equals = 'equals',
+  result = 'ResultField',
+  numbers = 'TabletNumbers',
+  operators = 'TabletOperators',
+  equals = 'Equals',
 }
 export enum Operators {
   delete = '/',

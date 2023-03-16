@@ -1,17 +1,11 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useDrag } from 'react-dnd';
-import TabletNumberInbox from './tabletNumberInbox';
-import TabletOperatorInbox from './tabletOperatorInbox';
-import { useDispatch, useSelector } from '../services/hooks';
+import TabletNumbers from './tabletNumbers';
+import TabletOperators from './tabletOperators';
+import { useSelector } from '../services/hooks';
 import ResultField from './ResultField';
 import Equals from './equals';
-import {
-  DropNumberInbox,
-  DropTabletOperatorInbox,
-  DropResultField,
-  DropEquals,
-} from '../store/calculatorDropSlice';
 import { ComponentBox } from '../theme/globalComponentStyle';
 import { NameComponents } from '../constans/constans';
 
@@ -43,40 +37,33 @@ const CalculatorDrag: FC = () => {
     resultField,
     equals,
   } = useSelector((state) => state.dropComponentsPostion);
-  const dispatch = useDispatch();
   const { isConstructor } = useSelector((state) => state.constructorField);
   const ComponentDrag = (
-    name: NameComponents, // Сам React компонент
+    name: NameComponents, // Имя компонента
     isComponent:boolean, // Проверка перенёсся компонент
-    dis: any, // Action переноса компонента
   ) => {
     const [, dragRef] = useDrag({
       type: 'dndField',
       item: {name},
       canDrag: !isComponent,
-      end: () => dispatch(dis()),
     });
     return dragRef;
   };
   const TabletOperatorInboxRef = ComponentDrag(
     NameComponents.operators,
     tabletOperatorInbox,
-    DropTabletOperatorInbox,
   );
   const TabletNumberInboxRef = ComponentDrag(
     NameComponents.numbers,
     numberInbox,
-    DropNumberInbox,
   );
   const resultFieldRef = ComponentDrag(
     NameComponents.result,
     resultField,
-    DropResultField,
   );
   const EqualsRef = ComponentDrag(
     NameComponents.equals,
     equals,
-    DropEquals,
   );
   return (<div>
     {isConstructor && 
@@ -87,11 +74,11 @@ const CalculatorDrag: FC = () => {
       </ComponentBoxDrag>
       <ComponentBoxDrag isDrag={tabletOperatorInbox} ref={TabletOperatorInboxRef}>
         <WrapComponent />
-        <TabletOperatorInbox />
+        <TabletOperators />
       </ComponentBoxDrag>
       <ComponentBoxDrag isDrag={numberInbox} ref={TabletNumberInboxRef}>
         <WrapComponent />
-        <TabletNumberInbox />
+        <TabletNumbers />
       </ComponentBoxDrag>
       <ComponentBoxDrag isDrag={equals} ref={EqualsRef}>
         <WrapComponent />
