@@ -42,6 +42,13 @@ const calculatorDropSlice = createSlice({
     ClearEquals: (state: TcalculatorDropState) => ({
       ...state, equals: false,
     }),
+    DefaultComponents: (state: TcalculatorDropState) => ({
+      ...state,
+      equals: false,
+      resultField: false,
+      tabletOperatorInbox: false,
+      numberInbox: false,
+    }),
   },
 });
 const calculatorDropReduser = calculatorDropSlice.reducer;
@@ -54,5 +61,6 @@ export const {
   ClearResultField,
   DropEquals,
   ClearEquals,
+  DefaultComponents,
 } = calculatorDropSlice.actions;
 export default calculatorDropReduser;

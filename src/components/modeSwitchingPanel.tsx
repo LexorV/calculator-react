@@ -3,7 +3,15 @@ import styled from 'styled-components';
 import { ModeSwithButton } from '../ui/buttons';
 import { fontTextMain } from '../theme/globalStyle';
 import { useDispatch, useSelector } from '../services/hooks';
-import { constructorEnable, constructorDisable } from '../store/constructorFieldSlice';
+import {
+  constructorEnable,
+  constructorDisable,
+  setComponents,
+} from '../store/constructorFieldSlice';
+import { clearCalculator } from '../store/calculatorState';
+import {
+  DefaultComponents,
+} from '../store/calculatorDropSlice';
 
 const ModeSwitchingPanelStyle = styled.div`
     width:243px;
@@ -18,6 +26,12 @@ const ModeSwitchingPanelStyle = styled.div`
 const ModeSwitchingPanel: FC = () => {
   const { isConstructor } = useSelector((state) => state.constructorField);
   const dispatch = useDispatch();
+  const constructorActive = () => {
+    dispatch(constructorEnable());
+    dispatch(clearCalculator());
+    dispatch(setComponents([]));
+    dispatch(DefaultComponents());
+  };
   return (
     <ModeSwitchingPanelStyle>
       <ModeSwithButton
@@ -27,7 +41,7 @@ const ModeSwitchingPanel: FC = () => {
       <ModeSwithButton
         isActive={isConstructor}
         type='Constructor'
-        onClick={(e) => dispatch(constructorEnable())} />
+        onClick={(e) => constructorActive()} />
 
     </ModeSwitchingPanelStyle>
   );

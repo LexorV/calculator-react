@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { TabletMain } from '../theme/globalComponentStyle';
 import { UniversalButton } from '../ui/buttons';
-import { calculation } from '../services/helpers';
+import { calculation, checkAmountNumber } from '../services/helpers';
 import { useDispatch, useSelector } from '../services/hooks';
 import {
   setNumberOne, setResult,
@@ -19,8 +19,8 @@ const Equals: FC = () => {
         Number(numberTwo),
         operator,
       );
-      dispatch(setResult(total));
-      dispatch(setNumberOne(total));
+      dispatch(setResult(checkAmountNumber(total)));
+      dispatch(setNumberOne(checkAmountNumber(total)));
     }
   };
   return (

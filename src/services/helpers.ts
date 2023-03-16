@@ -3,7 +3,7 @@ import { Operators } from '../constans/constans';
 
 export const generatorArray = (amount: number) => {
   const newArray = [];
-  for (let i = 1; i <= amount; i++) {
+  for (let i = amount; i >= 1; i--) {
     newArray.push(i);
   }
   return newArray;
@@ -30,3 +30,5 @@ export const checkLastPoint = (number:number | string) => {
   const ArrNumber = String(number).split('');
   return ArrNumber[ArrNumber.length - 1] === '.';
 };
+export const checkAmountNumber = (number:number) => (String(number).length > 20
+  ? Math.round(number).toFixed(15) : number);
