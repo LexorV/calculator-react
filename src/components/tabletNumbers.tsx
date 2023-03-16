@@ -6,7 +6,7 @@ import {
   setResult, fieldClear, setNumberTwo, clearCalculator,
 } from '../store/calculatorState';
 
-const TabletNumberInbox: FC = () => {
+const TabletNumbers: FC = () => {
   const {
     operator, result, isFieldClear,
   } = useSelector((state) => state.calculator);
@@ -64,4 +64,4 @@ const TabletNumberInbox: FC = () => {
     </TabletMain>
   );
 };
-export default TabletNumberInbox;
+export default TabletNumbers;

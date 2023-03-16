@@ -2,6 +2,7 @@ import React, {
   FC,
 } from 'react';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 import { useDrop } from 'react-dnd';
 import { SceneryIcon } from '../ui/icons';
 import { fontTextMain } from '../theme/globalStyle';
@@ -10,10 +11,16 @@ import { setComponents } from '../store/constructorFieldSlice';
 import { CoverComponentDrop } from './coverComponentDrop';
 import { DragItem } from '../types/globalType';
 import ResultField from './ResultField';
-import TabletNumberInbox from './tabletNumberInbox';
-import TabletOperatorInbox from './tabletOperatorInbox';
+import TabletNumbers from './tabletNumbers';
+import TabletOperators from './tabletOperators';
 import Equals from './equals';
 import { NameComponents } from '../constans/constans';
+import {
+  DropNumberInbox,
+  DropTabletOperatorInbox,
+  DropResultField,
+  DropEquals,
+} from '../store/calculatorDropSlice';
 
 type TFieldDropStyle = {
   isHover:boolean
@@ -59,12 +66,16 @@ const FieldDrop: FC = () => {
   const checkComponent = (component: NameComponents):ReturnType<FC> => {
     switch (component) {
       case NameComponents.result:
+        dispatch(DropResultField());
         return (<ResultField />);
       case NameComponents.numbers:
-        return (<TabletNumberInbox />);
+        dispatch(DropNumberInbox());
+        return (<TabletNumbers />);
       case NameComponents.operators:
-        return (<TabletOperatorInbox />);
+        dispatch(DropTabletOperatorInbox());
+        return (<TabletOperators />);
       case NameComponents.equals:
+        dispatch(DropEquals());
         return (<Equals />);
       default:
         return (<ResultField />);
@@ -107,7 +118,10 @@ const FieldDrop: FC = () => {
      )}
       <ConstructorBox>
         {components.length > 0 && (components.map((component:DragItem, i) => (
-          <CoverComponentDrop key={component.id} id={component.id} index={i}>
+          <CoverComponentDrop
+            key={uuidv4()}
+            id={component.id}
+            index={i}>
             {component.data}
           </CoverComponentDrop>
         )))}
