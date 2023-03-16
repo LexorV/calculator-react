@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { TabletMain } from '../theme/globalComponentStyle';
 import { fontTextMain } from '../theme/globalStyle';
-import { useDispatch, useSelector } from '../services/hooks';
+import { useSelector } from '../services/hooks';
 
 const ResultFieldStyle = styled.div`
 margin: 4px;
