@@ -31,6 +31,9 @@ display: flex;
 justify-content: center;
 align-items: center;
 background-color: ${(props) => (props.isEquals ? '#5D5FEF' : '#FFFFFF')};
+&:active {
+  border: 2px solid #5D5FEF;
+}
 `;
 /* eslint-disable */
 const ButtonSwithStyle = styled.button<TmodeSwithButtonStyle>`

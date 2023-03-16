@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type TcomponentCalac = {
-  data:FC,
+  data:any,
   id:number,
 };
 

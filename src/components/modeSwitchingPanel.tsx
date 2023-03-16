@@ -16,7 +16,7 @@ const ModeSwitchingPanelStyle = styled.div`
 `;
 
 const ModeSwitchingPanel: FC = () => {
-  const { isConstructor } = useSelector((state) => state.constructorFieldReduser);
+  const { isConstructor } = useSelector((state) => state.constructorField);
   const dispatch = useDispatch();
   return (
     <ModeSwitchingPanelStyle>

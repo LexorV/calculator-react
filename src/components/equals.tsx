@@ -1,10 +1,27 @@
 import React, { FC } from 'react';
 import { TabletMain } from '../theme/globalComponentStyle';
 import { UniversalButton } from '../ui/buttons';
+import { calculation } from '../services/helpers';
+import { useDispatch, useSelector } from '../services/hooks';
+import {
+  setNumberOne, setResult,
+} from '../store/calculatorState';
 
 const Equals: FC = () => {
-  const test = () => {
-    console.log('');
+  const dispatch = useDispatch();
+  const {
+    operator, numberOne, numberTwo,
+  } = useSelector((state) => state.calculator);
+  const accountCalc = () => {
+    if (operator && numberOne && numberTwo) {
+      const total = calculation(
+        Number(numberOne),
+        Number(numberTwo),
+        operator,
+      );
+      dispatch(setResult(total));
+      dispatch(setNumberOne(total));
+    }
   };
   return (
     <TabletMain>
@@ -13,7 +30,7 @@ const Equals: FC = () => {
         height={64}
         width={232}
         value='='
-        onClick={test} />
+        onClick={(e) => accountCalc()} />
     </TabletMain>
   );
 };
