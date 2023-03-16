@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import { UniversalButton } from '../ui/buttons';
-import { generatorArray } from '../services/helpers';
 import { TabletMain } from '../theme/globalComponentStyle';
 import { useDispatch, useSelector } from '../services/hooks';
-import { setResult, fieldClear, setNumberTwo } from '../store/calculatorState';
+import {
+  setResult, fieldClear, setNumberTwo, clearCalculator,
+} from '../store/calculatorState';
 
 const TabletNumberInbox: FC = () => {
   const {
@@ -15,14 +16,16 @@ const TabletNumberInbox: FC = () => {
     return String(number).split('').some(even);
   };
   const sendingNumberInStore = (number:number | string) => {
-    if (String(result).length < 11) {
-      if (!operator) {
+    if (String(result).length < 20) {
+      if (!operator && result !== Infinity) {
         if (result === 0) {
           dispatch(setResult(String(number)));
         } else {
           dispatch(setResult(String(result) + String(number)));
         }
-      } else if (!isFieldClear) {
+      } else if (result === Infinity) {
+        dispatch(clearCalculator());
+      } else if (!isFieldClear || result === Infinity) {
         dispatch(setResult(String(number)));
         dispatch(fieldClear());
         dispatch(setNumberTwo(String(number)));
@@ -31,6 +34,8 @@ const TabletNumberInbox: FC = () => {
         dispatch(setResult(numb));
         dispatch(setNumberTwo(numb));
       }
+    } else {
+      dispatch(setResult(Infinity));
     }
   };
   const sendingPointerInStore = () => {
@@ -38,7 +43,7 @@ const TabletNumberInbox: FC = () => {
       dispatch(setResult(String(result) + String('.')));
     }
   };
-  const arrayNumber = generatorArray(9); // генератор чисел аргумет количество
+  const arrayNumber = [7, 8, 9, 4, 5, 6, 1, 2, 3];
   return (
     <TabletMain>
       {
